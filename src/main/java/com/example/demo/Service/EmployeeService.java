@@ -11,8 +11,13 @@ import java.util.List;
 public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
-    public List<Employee> fetchAllEmployee(Pageable pageable) {
-        return employeeRepository.findAll(pageable).getContent();
+    public List<Employee> fetchAllEmployee(Pageable pageable,String search) {
+        if(search == null){
+            return employeeRepository.findAll(pageable).getContent();
+
+        }else{
+            return employeeRepository.findByName(search,pageable).getContent();
+        }
 
     }
 }
