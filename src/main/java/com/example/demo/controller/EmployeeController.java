@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.print.Pageable;
+
+
+
+
 import java.util.List;
 
 @RestController
@@ -39,8 +42,11 @@ public class EmployeeController {
         }else{
             sort = Sort.by(sortBy).descending();
         }
+        return employeeService.fetchAllEmployee(
+                PageRequest.of(pageNumber - 1, pageSize, sort),
+                search
+        );
 
-        return employeeService.fetchAllEmployee(PageRequest.of(pageNumber-1, pageSize,sort,search));
     }
 
 }

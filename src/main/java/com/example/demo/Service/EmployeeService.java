@@ -6,18 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 @Service
 public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
-    public List<Employee> fetchAllEmployee(Pageable pageable,String search) {
-        if(search == null){
+    public List<Employee> fetchAllEmployee(Pageable pageable, String search) {
+        if (search == null || search.trim().isEmpty()) {
             return employeeRepository.findAll(pageable).getContent();
-
-        }else{
-            return employeeRepository.findByName(search,pageable).getContent();
+        } else {
+            return employeeRepository
+                    .findByNameContainingIgnoreCase(search.trim(), pageable)
+                    .getContent();
         }
-
     }
+
 }
